@@ -28,6 +28,7 @@ const Game = {
     start() {
         this.createElements()
         this.setEventListener()
+        this.moveAll()
     },
 
     setDimensions() {
@@ -38,24 +39,56 @@ const Game = {
     createElements() {
 
 
-        const player = new Player(this.gameSize)
-        player.init()
-
-
+        this.player = new Player(this.gameSize)
 
     },
+
 
     setEventListener() {
         document.onkeydown = event => {
             switch (event.code) {
                 case this.keys.LEFT:
+                    console.log("izquierda")
                     this.player.moveLeft()
                     break;
+
+                case this.keys.RIGHT:
+                    console.log("derecha")
+                    this.player.moveRight()
+                    break;
+
+                case this.keys.TOP:
+                    console.log("Arriba")
+                    this.player.moveTop()
+                    break;
+                case this.keys.BOTTOM:
+
+                    console.log("abajo")
+                    this.player.moveBottom()
+                    break;
+
+                // SHOOTS
+                // case this.keys.SHOOTLEFT:
+                //     console.log("dispara izquierda")
+                //     this.player.moveRight()
+                //     break;
+                // case this.keys.SHOOTRIGHT:
+                //     console.log("dispara derecha")
+                //     this.player.moveRight()
+                //     break;
+                // case this.keys.SHOOTTOP:
+                //     console.log("dispara arriba")
+                //     this.player.moveRight()
+                //     break;
+                // case this.keys.SHOOTBOTTOM:
+                //     console.log("dispara abajo")
+                //     this.player.moveRight()
+                //     break;
+
             }
 
         }
     },
-
     moveAll() {
         this.player.move()
     }

@@ -13,22 +13,15 @@ class Player {
             top: gameSize.height / 2 - this.playerSize.height
         }
 
-        this.player = {
-            left: 10,
-            top: this.playerSize.height - this.gameSize.height
-        }
-
-        this.playerSpecs = {
-            color: 'yellow',
-
-        }
 
         this.playerPhysics = {
             speed: {
-                left: 10,
-                top: 10
+                left: 50,
+                top: 50
+
             }
         }
+        this.init()
     }
 
     init() {
@@ -45,21 +38,43 @@ class Player {
     }
 
     move() {
-        this.playerElement.style.top = `${this.playerPos.top}px`
-        this.playerElement.style.left = `${this.playerPos.left}px`
+        this.playerElement.style.top = `${this.playerPos.top}px`;
+        this.playerElement.style.left = `${this.playerPos.left}px`;
     }
 
+
     moveLeft() {
-        this.playerPos.left += this.playerPhysics.speed.left
+        if (this.playerPos.left > 0) {
+            this.playerPos.left -= this.playerPhysics.speed.left;
+            this.move();
+        }
     }
 
     moveRight() {
-        this.playerPos.left -= this.playerPhysics.speed.left
+        if (this.playerPos.left + this.playerSize.width < this.gameSize.width) {  // Limita el movimiento al borde derecho
+            this.playerPos.left += this.playerPhysics.speed.left;  // Mueve hacia la derecha
+            this.move();  // Actualiza la posición visual
+        }
     }
-    moveBottom() {
-        this.playerPos.top += this.playerPhysics.speed.top
-    }
+
     moveTop() {
-        this.playerPos.top -= this.playerPhysics.speed.top
+        if (this.playerPos.top > 0) {                   // Limita el movimiento al borde superior
+            this.playerPos.top -= this.playerPhysics.speed.top;
+            this.move();
+        }
     }
+
+    moveBottom() {
+        if (this.playerPos.top + this.playerSize.height < this.gameSize.height) { // Limita al borde inferior
+            this.playerPos.top += this.playerPhysics.speed.top;
+            this.move();
+        }
+    }
+
+
+    // denyMoveLeft() {
+    //     if (this.playerPos.left + this.playerSize.width < this.gameSize.width) {
+    //         this.moveLeft.disable = true
+    //     }
+    // }
 }
