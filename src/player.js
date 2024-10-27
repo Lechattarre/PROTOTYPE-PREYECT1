@@ -3,6 +3,7 @@ class Player {
     constructor(gameSize) {
 
         this.gameSize = gameSize
+        this.bullets = []
 
         this.playerSize = {
             width: 50,
@@ -40,6 +41,9 @@ class Player {
     move() {
         this.playerElement.style.top = `${this.playerPos.top}px`;
         this.playerElement.style.left = `${this.playerPos.left}px`;
+
+        this.bullets.forEach(bullet => bullet.move())
+        this.clearBullets()
     }
 
 
@@ -65,16 +69,29 @@ class Player {
     }
 
     moveBottom() {
-        if (this.playerPos.top + this.playerSize.height < this.gameSize.height) { // Limita al borde inferior
+        if (this.playerPos.top + this.playerSize.height < this.gameSize.height) { // este es el Limitador del borde inferior
             this.playerPos.top += this.playerPhysics.speed.top;
             this.move();
         }
     }
 
+    shoot(direction) {
+        this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction));
+    }
 
-    // denyMoveLeft() {
-    //     if (this.playerPos.left + this.playerSize.width < this.gameSize.width) {
-    //         this.moveLeft.disable = true
-    //     }
-    // }
+    clearBullets() {
+        this.bullets.forEach((bullet, idx) => {
+            if (
+                bullet.bulletPos.left < 0 ||
+                bullet.bulletPos.left > this.gameSize.width ||
+                bullet.bulletPos.top < 0 ||
+                bullet.bulletPos.top > this.gameSize.height
+            ) {
+                bullet.bulletElement.remove();
+                this.bullets.splice(idx, 1);
+            }
+        });
+    }
+
+
 }
