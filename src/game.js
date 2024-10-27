@@ -5,7 +5,10 @@ const Game = {
     license: undefined,
     framesCounter: 0,
 
-    gameSize: { width: 1500, height: 700 },
+    gameSize: {
+        width: 1500,
+        height: 700
+    },
 
     keys: {
         LEFT: 'KeyA',
@@ -18,54 +21,64 @@ const Game = {
         SHOOTBOTTOM: 'ArrowDown'
     },
 
+    smallEnemies: [], // Array to store small enemies
+
     init() {
         this.setDimensions();
+        this.start();
+    },
+
+    start() {
         this.createElements();
         this.setEventListener();
         this.startGameLoop();
     },
 
     setDimensions() {
-        const gameScreen = document.querySelector('#game-screen');
-        gameScreen.style.width = `${this.gameSize.width}px`;
-        gameScreen.style.height = `${this.gameSize.height}px`;
+        document.querySelector('#game-screen').style.width = `${this.gameSize.width}px`;
+        document.querySelector('#game-screen').style.height = `${this.gameSize.height}px`;
     },
 
     createElements() {
         this.player = new Player(this.gameSize);
+        this.enemy = new Enemy(this.gameSize);
+
+        // Crear múltiples pequeños enemigos
+        for (let i = 0; i < 5; i++) {
+            this.smallEnemies.push(new SmallEnemy(this.player)); // Pasamos el objeto player
+        }
+    },
+
+    startGameLoop() {
+        setInterval(() => {
+            this.moveAll();
+        }, 1000 / 60); // 60 FPS
     },
 
     setEventListener() {
-        document.onkeydown = ({ code }) => {
-            switch (code) {
+        document.onkeydown = event => {
+            switch (event.code) {
                 case this.keys.LEFT:
                     this.player.moveLeft();
                     break;
-
                 case this.keys.RIGHT:
                     this.player.moveRight();
                     break;
-
                 case this.keys.TOP:
                     this.player.moveTop();
                     break;
-
                 case this.keys.BOTTOM:
                     this.player.moveBottom();
                     break;
-
                 case this.keys.SHOOTLEFT:
                     this.player.shoot('left');
                     break;
-
                 case this.keys.SHOOTRIGHT:
                     this.player.shoot('right');
                     break;
-
                 case this.keys.SHOOTTOP:
                     this.player.shoot('top');
                     break;
-
                 case this.keys.SHOOTBOTTOM:
                     this.player.shoot('bottom');
                     break;
@@ -73,26 +86,13 @@ const Game = {
         };
     },
 
-    startGameLoop() {
-        const gameLoop = () => {
-            this.framesCounter++;
-            if (this.framesCounter > 10000)
-                this.framesCounter = 0;
-
-            this.moveAll();
-
-            requestAnimationFrame(gameLoop);
-        };
-        gameLoop();
-    },
-
     moveAll() {
         this.player.move();
-        this.updateBullets();
-    },
-
-    updateBullets() {
         this.player.bullets.forEach(bullet => bullet.move());
         this.player.clearBullets();
+        this.enemy.move();
+
+        // Mover todos los pequeños enemigos
+        this.smallEnemies.forEach(smallEnemy => smallEnemy.move());
     }
 };
