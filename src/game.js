@@ -33,6 +33,7 @@ const Game = {
 
     createElements() {
         this.player = new Player(this.gameSize);
+        this.enemigo = new Enemigo(this.gameSize);
     },
 
     setEventListener() {
@@ -89,6 +90,7 @@ const Game = {
     moveAll() {
         this.player.move();
         this.updateBullets();
+        this.enemigo.move()
     },
 
     updateBullets() {
