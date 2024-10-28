@@ -20,8 +20,14 @@ class Bullets {
 
         this.init()
     }
+
     setVelocity(direction) {
-        this.bulletVel = { left: 0, top: 0 }
+
+        this.bulletVel = {
+            left: 0,
+            top: 0
+        }
+
         switch (direction) {
             case 'left':
                 this.bulletVel.left = -10
@@ -36,8 +42,8 @@ class Bullets {
                 this.bulletVel.top = 10
                 break
         }
-
     }
+
     init() {
         this.bulletElement = document.createElement('div')
 
@@ -62,5 +68,17 @@ class Bullets {
     updatePosition() {
         this.bulletElement.style.left = `${this.bulletPos.left}px`;
         this.bulletElement.style.top = `${this.bulletPos.top}px`;
+    }
+
+    getBulletLimits() {
+
+        return {
+            left: this.bulletPos.left,
+            top: this.bulletPos.top,
+            right: this.bulletPos.left + this.bulletSize.width,
+            bottom: this.bulletPos.top + this.bulletSize.height,
+            width: this.bulletSize.width,
+            height: this.bulletSize.height
+        }
     }
 }

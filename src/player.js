@@ -3,17 +3,18 @@ class Player {
     constructor(gameSize) {
 
         this.gameSize = gameSize
+
         this.bullets = []
 
         this.playerSize = {
             width: 50,
             height: 50
         }
+
         this.playerPos = {
             left: gameSize.width / 2 - this.playerSize.width,
             top: gameSize.height / 2 - this.playerSize.height
         }
-
 
         this.playerPhysics = {
             speed: {
@@ -22,6 +23,7 @@ class Player {
 
             }
         }
+
         this.init()
     }
 
@@ -92,7 +94,8 @@ class Player {
             }
         });
     }
-    LimitsOfPlayer() {
+
+    getPlayerLimits() {
         return {
             left: this.playerPos.left,
             top: this.playerPos.top,

@@ -42,6 +42,7 @@ const Game = {
     createElements() {
         this.player = new Player(this.gameSize);
         this.enemy = new Enemy(this.gameSize);
+        // this.bullet = new Bullets(this.gameSize);
 
 
         for (let i = 0; i < 5; i++) {
@@ -51,8 +52,10 @@ const Game = {
 
     startGameLoop() {
         setInterval(() => {
-            this.moveAll();
-            if (this.colisionDetector()) this.gameOver()
+
+            this.moveAll()
+
+            if (this.detectCollision()) this.gameOver()
 
         }, 1000 / 60);
     },
@@ -91,12 +94,10 @@ const Game = {
     moveAll() {
         this.player.move();
         this.player.bullets.forEach(bullet => bullet.move());
-        this.player.clearBullets();
         this.enemy.move();
 
-
-        const playerBounds = this.player.LimitsOfPlayer();
-        const enemyBounds = this.enemy.LimitsOfEnemy();
+        const playerBounds = this.player.getPlayerLimits();
+        const enemyBounds = this.enemy.getEnemyLimits();
 
         console.log(`Player: ${JSON.stringify(playerBounds)}`);
         console.log(`Enemy: ${JSON.stringify(enemyBounds)}`);
@@ -104,22 +105,37 @@ const Game = {
 
         this.smallEnemies.forEach(smallEnemy => smallEnemy.move());
     },
-    colisionDetector() {
-        const playerBounds = this.player.LimitsOfPlayer();
-        const enemyBounds = this.enemy.LimitsOfEnemy();
+
+    detectCollision() {
+        const playerBounds = this.player.getPlayerLimits();
+        const enemyBounds = this.enemy.getEnemyLimits();
         if (
-            playerBounds.left + playerBounds.width < enemyBounds.right &&
-            playerBounds.right + playerBounds.width > enemyBounds.left &&
+            playerBounds.left < enemyBounds.right &&
+            playerBounds.right > enemyBounds.left &&
             playerBounds.top < enemyBounds.bottom &&
             playerBounds.bottom > enemyBounds.top
 
         ) {
-            alert('toco')
+
             return true
         }
     },
 
-    gameOver() {
-        alert("perdiste")
-    }
+    // detectBulletImpact() {
+
+    //     // const bulletBounds = this.bullet.getBulletLimits();
+    //     const enemyBounds = this.enemy.LimitsOfEnemy();
+    //     if (
+    //         bulletBounds.right < enemyBounds.right &&
+    //         bulletBounds.right > enemyBounds.left &&
+    //         bulletBounds.top < enemyBounds.bottom &&
+    //         bulletBounds.bottom > enemyBounds.top
+    //     ) {
+    //         return alert("le pega")
+    //     }
+    // },
+
+    // gameOver() {
+    //     alert("perdiste")
+    // }
 };

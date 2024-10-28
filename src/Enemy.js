@@ -19,6 +19,8 @@ class Enemy {
             }
         };
 
+        this.healthPoints = 50
+
         this.init();
     }
 
@@ -50,7 +52,8 @@ class Enemy {
         this.element.style.left = `${this.position.left}px`;
         this.element.style.top = `${this.position.top}px`;
     }
-    LimitsOfEnemy() {
+
+    getEnemyLimits() {
         return {
             left: this.position.left,
             top: this.position.top,
