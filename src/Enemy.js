@@ -2,14 +2,14 @@ class Enemy {
     constructor(gameSize) {
         this.gameSize = gameSize;
 
-        this.size = {
+        this.enemySize = {
             width: 250,
             height: 250
         };
 
         this.position = {
-            left: Math.random() * (gameSize.width - this.size.width), // Posición aleatoria dentro del área del juego
-            top: Math.random() * (gameSize.height - this.size.height)
+            left: Math.random() * (gameSize.width - this.enemySize.width),
+            top: Math.random() * (gameSize.height - this.enemySize.height)
         };
 
         this.physics = {
@@ -25,8 +25,8 @@ class Enemy {
     init() {
         this.element = document.createElement('div');
         this.element.style.position = "absolute";
-        this.element.style.width = `${this.size.width}px`;
-        this.element.style.height = `${this.size.height}px`;
+        this.element.style.width = `${this.enemySize.width}px`;
+        this.element.style.height = `${this.enemySize.height}px`;
         this.element.style.left = `${this.position.left}px`;
         this.element.style.top = `${this.position.top}px`;
         this.element.style.backgroundColor = 'yellow';
@@ -35,13 +35,13 @@ class Enemy {
     }
 
     move() {
-        // Mover enemigo y comprobar colisiones con los bordes
-        if (this.position.left >= this.gameSize.width - this.size.width || this.position.left <= 0) {
-            this.physics.speed.left *= -1; // Rebotar horizontalmente
+
+        if (this.position.left >= this.gameSize.width - this.enemySize.width || this.position.left <= 0) {
+            this.physics.speed.left *= -1;
         }
 
-        if (this.position.top >= this.gameSize.height - this.size.height || this.position.top <= 0) {
-            this.physics.speed.top *= -1; // Rebotar verticalmente
+        if (this.position.top >= this.gameSize.height - this.enemySize.height || this.position.top <= 0) {
+            this.physics.speed.top *= -1;
         }
 
         this.position.left += this.physics.speed.left;
@@ -49,5 +49,15 @@ class Enemy {
 
         this.element.style.left = `${this.position.left}px`;
         this.element.style.top = `${this.position.top}px`;
+    }
+    LimitsOfEnemy() {
+        return {
+            left: this.position.left,
+            top: this.position.top,
+            right: this.position.left + this.enemySize.width,
+            bottom: this.position.top + this.enemySize.height,
+            width: this.enemySize.width,
+            height: this.enemySize.height
+        }
     }
 }

@@ -29,20 +29,6 @@ class SmallEnemy {
     }
 
     move() {
-        // Asegúrate de que la posición del jugador se esté actualizando correctamente
-        const dx = this.player.playerPos.left - this.position.left;
-        const dy = this.player.playerPos.top - this.position.top;
-
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance > 5) {
-            const angle = Math.atan2(dy, dx);
-
-            this.position.left += Math.cos(angle) * this.speed;
-            this.position.top += Math.sin(angle) * this.speed;
-
-            this.updatePosition();
-        }
     }
 
     updatePosition() {

@@ -55,21 +55,21 @@ class Player {
     }
 
     moveRight() {
-        if (this.playerPos.left + this.playerSize.width < this.gameSize.width) {  // Limita el movimiento al borde derecho
-            this.playerPos.left += this.playerPhysics.speed.left;  // Mueve hacia la derecha
-            this.move();  // Actualiza la posición visual
+        if (this.playerPos.left + this.playerSize.width < this.gameSize.width) {
+            this.playerPos.left += this.playerPhysics.speed.left;
+            this.move();
         }
     }
 
     moveTop() {
-        if (this.playerPos.top > 0) {                   // Limita el movimiento al borde superior
+        if (this.playerPos.top > 0) {
             this.playerPos.top -= this.playerPhysics.speed.top;
             this.move();
         }
     }
 
     moveBottom() {
-        if (this.playerPos.top + this.playerSize.height < this.gameSize.height) { // este es el Limitador del borde inferior
+        if (this.playerPos.top + this.playerSize.height < this.gameSize.height) {
             this.playerPos.top += this.playerPhysics.speed.top;
             this.move();
         }
@@ -91,6 +91,16 @@ class Player {
                 this.bullets.splice(idx, 1);
             }
         });
+    }
+    LimitsOfPlayer() {
+        return {
+            left: this.playerPos.left,
+            top: this.playerPos.top,
+            right: this.playerPos.left + this.playerSize.width,
+            bottom: this.playerPos.top + this.playerSize.height,
+            width: this.playerSize.width,
+            height: this.playerSize.height
+        }
     }
 
 

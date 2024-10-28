@@ -21,7 +21,7 @@ const Game = {
         SHOOTBOTTOM: 'ArrowDown'
     },
 
-    smallEnemies: [], // Array to store small enemies
+    smallEnemies: [],
 
     init() {
         this.setDimensions();
@@ -43,16 +43,18 @@ const Game = {
         this.player = new Player(this.gameSize);
         this.enemy = new Enemy(this.gameSize);
 
-        // Crear múltiples pequeños enemigos
+
         for (let i = 0; i < 5; i++) {
-            this.smallEnemies.push(new SmallEnemy(this.player)); // Pasamos el objeto player
+            this.smallEnemies.push(new SmallEnemy(this.player));
         }
     },
 
     startGameLoop() {
         setInterval(() => {
             this.moveAll();
-        }, 1000 / 60); // 60 FPS
+            if (this.colisionDetector()) this.gameOver()
+
+        }, 1000 / 60);
     },
 
     setEventListener() {
@@ -92,7 +94,32 @@ const Game = {
         this.player.clearBullets();
         this.enemy.move();
 
-        // Mover todos los pequeños enemigos
+
+        const playerBounds = this.player.LimitsOfPlayer();
+        const enemyBounds = this.enemy.LimitsOfEnemy();
+
+        console.log(`Player: ${JSON.stringify(playerBounds)}`);
+        console.log(`Enemy: ${JSON.stringify(enemyBounds)}`);
+
+
         this.smallEnemies.forEach(smallEnemy => smallEnemy.move());
+    },
+    colisionDetector() {
+        const playerBounds = this.player.LimitsOfPlayer();
+        const enemyBounds = this.enemy.LimitsOfEnemy();
+        if (
+            playerBounds.left + playerBounds.width < enemyBounds.right &&
+            playerBounds.right + playerBounds.width > enemyBounds.left &&
+            playerBounds.top < enemyBounds.bottom &&
+            playerBounds.bottom > enemyBounds.top
+
+        ) {
+            alert('toco')
+            return true
+        }
+    },
+
+    gameOver() {
+        alert("perdiste")
     }
 };
