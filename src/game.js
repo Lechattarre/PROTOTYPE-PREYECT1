@@ -21,7 +21,7 @@ const Game = {
         SHOOTBOTTOM: 'ArrowDown'
     },
 
-    smallEnemies: [], // Array to store small enemies
+    smallEnemies: [],
 
     init() {
         this.setDimensions();
@@ -42,17 +42,22 @@ const Game = {
     createElements() {
         this.player = new Player(this.gameSize);
         this.enemy = new Enemy(this.gameSize);
+        // this.bullet = new Bullets(this.gameSize);
 
-        // Crear múltiples pequeños enemigos
+
         for (let i = 0; i < 5; i++) {
-            this.smallEnemies.push(new SmallEnemy(this.player)); // Pasamos el objeto player
+            this.smallEnemies.push(new SmallEnemy(this.player));
         }
     },
 
     startGameLoop() {
         setInterval(() => {
-            this.moveAll();
-        }, 1000 / 60); // 60 FPS
+
+            this.moveAll()
+
+            if (this.detectCollision()) this.gameOver()
+
+        }, 1000 / 60);
     },
 
     setEventListener() {
@@ -89,10 +94,48 @@ const Game = {
     moveAll() {
         this.player.move();
         this.player.bullets.forEach(bullet => bullet.move());
-        this.player.clearBullets();
         this.enemy.move();
 
-        // Mover todos los pequeños enemigos
+        const playerBounds = this.player.getPlayerLimits();
+        const enemyBounds = this.enemy.getEnemyLimits();
+
+        console.log(`Player: ${JSON.stringify(playerBounds)}`);
+        console.log(`Enemy: ${JSON.stringify(enemyBounds)}`);
+
+
         this.smallEnemies.forEach(smallEnemy => smallEnemy.move());
-    }
+    },
+
+    detectCollision() {
+        const playerBounds = this.player.getPlayerLimits();
+        const enemyBounds = this.enemy.getEnemyLimits();
+        if (
+            playerBounds.left < enemyBounds.right &&
+            playerBounds.right > enemyBounds.left &&
+            playerBounds.top < enemyBounds.bottom &&
+            playerBounds.bottom > enemyBounds.top
+
+        ) {
+
+            return true
+        }
+    },
+
+    // detectBulletImpact() {
+
+    //     // const bulletBounds = this.bullet.getBulletLimits();
+    //     const enemyBounds = this.enemy.LimitsOfEnemy();
+    //     if (
+    //         bulletBounds.right < enemyBounds.right &&
+    //         bulletBounds.right > enemyBounds.left &&
+    //         bulletBounds.top < enemyBounds.bottom &&
+    //         bulletBounds.bottom > enemyBounds.top
+    //     ) {
+    //         return alert("le pega")
+    //     }
+    // },
+
+    // gameOver() {
+    //     alert("perdiste")
+    // }
 };
