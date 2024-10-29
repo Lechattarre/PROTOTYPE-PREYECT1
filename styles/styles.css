@@ -6,6 +6,9 @@
 #game-screen {
     position: relative;
     overflow: hidden;
-    background-color: aqua;
+    background-image: url(../imgs/background.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+
 
 }

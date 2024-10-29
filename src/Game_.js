@@ -6,8 +6,8 @@ const Game = {
     framesCounter: 0,
 
     gameSize: {
-        width: 1500,
-        height: 700
+        width: 1700,
+        height: 900
     },
 
     keys: {

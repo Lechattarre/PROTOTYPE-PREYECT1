@@ -14,8 +14,8 @@ class SmallEnemy {
         }
         this.physics = {
             speed: {
-                left: 4.5,
-                top: 4.5
+                left: 2.5,
+                top: 2.5
             }
 
         }
