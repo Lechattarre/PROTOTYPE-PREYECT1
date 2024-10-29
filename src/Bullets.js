@@ -5,7 +5,7 @@ class Bullets {
         this.playerPos = playerPos
         this.playerSize = playerSize
         this.gameSize = gameSize
-        this.direction = direction // Guardamos la dirección
+        this.direction = direction
 
         this.bulletPos = {
             left: playerPos.left + playerSize.width / 4,
@@ -55,7 +55,7 @@ class Bullets {
         this.bulletElement.style.left = `${this.bulletPos.left}px`
         this.bulletElement.style.top = `${this.bulletPos.top}px`
 
-        // Rotación según dirección
+
         switch (this.direction) {
             case 'left':
                 this.bulletElement.style.transform = "rotate(-90deg)"
