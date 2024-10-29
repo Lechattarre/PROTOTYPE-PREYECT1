@@ -1,5 +1,5 @@
 const Game = {
-    name: 'Videogame 1',
+    name: 'Killer teacher',
     author: 'john & ivan',
     version: '1.0',
     license: undefined,
@@ -23,6 +23,7 @@ const Game = {
 
     smallEnemies: [],
 
+
     init() {
         this.setDimensions();
         this.start();
@@ -42,12 +43,11 @@ const Game = {
     createElements() {
         this.player = new Player(this.gameSize);
         this.enemy = new Enemy(this.gameSize);
-        // this.bullet = new Bullets(this.gameSize);
-
 
         for (let i = 0; i < 5; i++) {
             this.smallEnemies.push(new SmallEnemy(this.player));
         }
+
     },
 
     startGameLoop() {
@@ -56,6 +56,8 @@ const Game = {
             this.moveAll()
 
             if (this.detectCollision()) this.gameOver()
+            this.detectBulletImpact()
+            this.eliminateEnemy()
 
         }, 1000 / 60);
     },
@@ -96,12 +98,6 @@ const Game = {
         this.player.bullets.forEach(bullet => bullet.move());
         this.enemy.move();
 
-        const playerBounds = this.player.getPlayerLimits();
-        const enemyBounds = this.enemy.getEnemyLimits();
-
-        console.log(`Player: ${JSON.stringify(playerBounds)}`);
-        console.log(`Enemy: ${JSON.stringify(enemyBounds)}`);
-
 
         this.smallEnemies.forEach(smallEnemy => smallEnemy.move());
     },
@@ -116,26 +112,46 @@ const Game = {
             playerBounds.bottom > enemyBounds.top
 
         ) {
-
             return true
         }
     },
 
-    // detectBulletImpact() {
 
-    //     // const bulletBounds = this.bullet.getBulletLimits();
-    //     const enemyBounds = this.enemy.LimitsOfEnemy();
-    //     if (
-    //         bulletBounds.right < enemyBounds.right &&
-    //         bulletBounds.right > enemyBounds.left &&
-    //         bulletBounds.top < enemyBounds.bottom &&
-    //         bulletBounds.bottom > enemyBounds.top
-    //     ) {
-    //         return alert("le pega")
-    //     }
-    // },
 
-    // gameOver() {
-    //     alert("perdiste")
-    // }
+
+    detectBulletImpact() {
+
+        this.player.bullets.forEach((bullet, idx) => {
+            const enemyBounds = this.enemy.getEnemyLimits();
+            const bulletBounds = bullet.getBulletLimits();
+
+            if (
+                bulletBounds.left < enemyBounds.right &&
+                bulletBounds.right > enemyBounds.left &&
+                bulletBounds.top < enemyBounds.bottom &&
+                bulletBounds.bottom > enemyBounds.top
+            ) {
+
+                this.player.bullets.splice(idx, 1)
+                bullet.bulletElement.remove()
+                this.enemy.healthPoints--
+                console.log(this.enemy.healthPoints)
+            }
+
+        })
+
+    },
+
+    eliminateEnemy() {
+        if (this.enemy.healthPoints === 0) {
+            this.enemy.element.remove();
+
+        }
+
+
+    },
+
+    gameOver() {
+
+    }
 };
