@@ -12,8 +12,8 @@ class Player {
         }
 
         this.playerPos = {
-            left: gameSize.width / 2 - this.playerSize.width,
-            top: gameSize.height / 2 - this.playerSize.height
+            left: gameSize.width - this.playerSize.width,
+            top: gameSize.height - this.playerSize.height
         }
 
         this.playerPhysics = {
@@ -41,8 +41,8 @@ class Player {
     }
 
     move() {
-        this.playerElement.style.top = `${this.playerPos.top}px`;
-        this.playerElement.style.left = `${this.playerPos.left}px`;
+        this.playerElement.style.top = `${this.playerPos.top}px`
+        this.playerElement.style.left = `${this.playerPos.left}px`
 
         this.bullets.forEach(bullet => bullet.move())
         this.clearBullets()
@@ -51,36 +51,35 @@ class Player {
 
     moveLeft() {
         if (this.playerPos.left > 0) {
-            this.playerPos.left -= this.playerPhysics.speed.left;
-            this.move();
+            this.playerPos.left -= this.playerPhysics.speed.left
+            this.move()
         }
     }
 
     moveRight() {
         if (this.playerPos.left + this.playerSize.width < this.gameSize.width) {
-            this.playerPos.left += this.playerPhysics.speed.left;
-            this.move();
+            this.playerPos.left += this.playerPhysics.speed.left
+            this.move()
         }
     }
 
     moveTop() {
         if (this.playerPos.top > 0) {
-            this.playerPos.top -= this.playerPhysics.speed.top;
-            this.move();
+            this.playerPos.top -= this.playerPhysics.speed.top
+            this.move()
         }
     }
 
     moveBottom() {
         if (this.playerPos.top + this.playerSize.height < this.gameSize.height) {
-            this.playerPos.top += this.playerPhysics.speed.top;
-            this.move();
+            this.playerPos.top += this.playerPhysics.speed.top
+            this.move()
         }
     }
 
     shoot(direction) {
-        this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction));
+        this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction))
     }
-
     clearBullets() {
         this.bullets.forEach((bullet, idx) => {
             if (
@@ -89,8 +88,8 @@ class Player {
                 bullet.bulletPos.top < 0 ||
                 bullet.bulletPos.top > this.gameSize.height
             ) {
-                bullet.bulletElement.remove();
-                this.bullets.splice(idx, 1);
+                bullet.bulletElement.remove()
+                this.bullets.splice(idx, 1)
             }
         });
     }
@@ -105,6 +104,4 @@ class Player {
             height: this.playerSize.height
         }
     }
-
-
 }

@@ -15,8 +15,7 @@ class Bullets {
             width: 30,
             height: 30
         }
-
-        this.setVelocity(direction);
+        this.setVelocity(direction)
 
         this.init()
     }
@@ -59,15 +58,15 @@ class Bullets {
     }
 
     move() {
-        this.bulletPos.left += this.bulletVel.left;
-        this.bulletPos.top += this.bulletVel.top;
+        this.bulletPos.left += this.bulletVel.left
+        this.bulletPos.top += this.bulletVel.top
 
         this.updatePosition();
     }
 
     updatePosition() {
-        this.bulletElement.style.left = `${this.bulletPos.left}px`;
-        this.bulletElement.style.top = `${this.bulletPos.top}px`;
+        this.bulletElement.style.left = `${this.bulletPos.left}px`
+        this.bulletElement.style.top = `${this.bulletPos.top}px`
     }
 
     getBulletLimits() {

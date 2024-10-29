@@ -23,6 +23,8 @@ const Game = {
 
     smallEnemies: [],
 
+    smallEnemiesQuantity: 5,
+
 
     init() {
         this.setDimensions();
@@ -45,7 +47,7 @@ const Game = {
         this.enemy = new Enemy(this.gameSize);
 
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < this.smallEnemiesQuantity; i++) {
             this.smallEnemies.push(new SmallEnemy(this.gameSize));
         }
 
@@ -57,9 +59,10 @@ const Game = {
             this.moveAll()
 
             if (this.detectCollision()) this.gameOver()
+
             this.detectBulletImpact()
             this.eliminateEnemy()
-
+            this.checkWin()
 
         }, 1000 / 60);
     },
@@ -99,15 +102,12 @@ const Game = {
         this.player.move()
         this.player.bullets.forEach(bullet => bullet.move())
         this.enemy?.move()
-
-
-
-
         this.smallEnemies.forEach(smallEnemy => smallEnemy.move())
     },
 
     detectCollision() {
-        if (!this.enemy) {
+
+        if (!this.enemy && this.smallEnemies.length == 0) {
             return false
         }
         const playerBounds = this.player.getPlayerLimits();
@@ -117,23 +117,31 @@ const Game = {
             playerBounds.right > enemyBounds.left &&
             playerBounds.top < enemyBounds.bottom &&
             playerBounds.bottom > enemyBounds.top
-
         ) {
             return true
         }
+
+        for (let i = 0; i < this.smallEnemies.length; i++) {
+            const smallEnemiesBounds = this.smallEnemies[i].getSmallEnemiesLimits()
+            if (
+                playerBounds.left < smallEnemiesBounds.right &&
+                playerBounds.right > smallEnemiesBounds.left &&
+                playerBounds.top < smallEnemiesBounds.bottom &&
+                playerBounds.bottom > smallEnemiesBounds.top
+            ) {
+                return true
+            }
+        }
     },
 
-
-
-
     detectBulletImpact() {
-        if (!this.enemy) {
+        if (!this.enemy && this.smallEnemies.length == 0) {
             return false
         }
 
         this.player.bullets.forEach((bullet, idx) => {
-            const enemyBounds = this.enemy.getEnemyLimits();
-            const bulletBounds = bullet.getBulletLimits();
+            const enemyBounds = this.enemy.getEnemyLimits()
+            const bulletBounds = bullet.getBulletLimits()
 
             if (
                 bulletBounds.left < enemyBounds.right &&
@@ -145,24 +153,50 @@ const Game = {
                 this.player.bullets.splice(idx, 1)
                 bullet.bulletElement.remove()
                 this.enemy.healthPoints--
-                console.log(this.enemy.healthPoints)
             }
+            this.smallEnemies.forEach((smallEnemy, enemyidx) => {
+                const smallEnemiesBounds = smallEnemy.getSmallEnemiesLimits()
+                if (
+                    bulletBounds.left < smallEnemiesBounds.right &&
+                    bulletBounds.right > smallEnemiesBounds.left &&
+                    bulletBounds.top < smallEnemiesBounds.bottom &&
+                    bulletBounds.bottom > smallEnemiesBounds.top
+                ) {
 
+                    this.smallEnemies.splice(enemyidx, 1)
+                    bullet.bulletElement.remove()
+                    smallEnemy.element.remove()
+                    // smallEnemy.healthPoints--
+
+                    console.log("HIT")
+                }
+            })
         })
-
     },
 
     eliminateEnemy() {
         if (this.enemy && this.enemy.healthPoints === 0) {
             this.enemy.element.remove();
-            if (this.enemy.timerId) {
-                clearTimeout(this.enemy.timerId);
-            }
+
             this.enemy = null
         }
     },
+    // eliminateSmallenemies() {
+    //     if (this.smallEnemies && this.s.healthPoints === 0) {
+    //         this.enemy.element.remove();
+    //         if (this.enemy.timerId) {
+    //             clearTimeout(this.enemy.timerId);
+    //         }
+    //         this.enemy = null
+    //     }
+    // },
 
     gameOver() {
-
+        alert("perdiste por malo")
+    },
+    checkWin() {
+        if (!this.enemy && this.smallEnemies.length === 0) {
+            return alert("GANASTE")
+        }
     }
 };
