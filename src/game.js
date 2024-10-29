@@ -44,8 +44,9 @@ const Game = {
         this.player = new Player(this.gameSize);
         this.enemy = new Enemy(this.gameSize);
 
+
         for (let i = 0; i < 5; i++) {
-            this.smallEnemies.push(new SmallEnemy(this.player));
+            this.smallEnemies.push(new SmallEnemy(this.gameSize));
         }
 
     },
@@ -58,6 +59,7 @@ const Game = {
             if (this.detectCollision()) this.gameOver()
             this.detectBulletImpact()
             this.eliminateEnemy()
+
 
         }, 1000 / 60);
     },
@@ -94,17 +96,22 @@ const Game = {
     },
 
     moveAll() {
-        this.player.move();
-        this.player.bullets.forEach(bullet => bullet.move());
-        this.enemy.move();
+        this.player.move()
+        this.player.bullets.forEach(bullet => bullet.move())
+        this.enemy?.move()
 
 
-        this.smallEnemies.forEach(smallEnemy => smallEnemy.move());
+
+
+        this.smallEnemies.forEach(smallEnemy => smallEnemy.move())
     },
 
     detectCollision() {
+        if (!this.enemy) {
+            return false
+        }
         const playerBounds = this.player.getPlayerLimits();
-        const enemyBounds = this.enemy.getEnemyLimits();
+        const enemyBounds = this.enemy?.getEnemyLimits();
         if (
             playerBounds.left < enemyBounds.right &&
             playerBounds.right > enemyBounds.left &&
@@ -120,6 +127,9 @@ const Game = {
 
 
     detectBulletImpact() {
+        if (!this.enemy) {
+            return false
+        }
 
         this.player.bullets.forEach((bullet, idx) => {
             const enemyBounds = this.enemy.getEnemyLimits();
@@ -143,12 +153,13 @@ const Game = {
     },
 
     eliminateEnemy() {
-        if (this.enemy.healthPoints === 0) {
+        if (this.enemy && this.enemy.healthPoints === 0) {
             this.enemy.element.remove();
-
+            if (this.enemy.timerId) {
+                clearTimeout(this.enemy.timerId);
+            }
+            this.enemy = null
         }
-
-
     },
 
     gameOver() {
