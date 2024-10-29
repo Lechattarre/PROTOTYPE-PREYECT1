@@ -3,8 +3,8 @@ class Enemy {
         this.gameSize = gameSize
 
         this.enemySize = {
-            width: 250,
-            height: 250
+            width: 350,
+            height: 350
         };
 
         this.position = {
