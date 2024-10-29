@@ -23,6 +23,14 @@ class Player {
 
             }
         }
+        this.moveFlags = {
+            left: false,
+            right: false,
+            up: false,
+            down: false
+        }
+
+        this.speed = 9
 
         this.init()
     }
@@ -45,41 +53,54 @@ class Player {
     }
 
     move() {
-        this.playerElement.style.top = `${this.playerPos.top}px`
-        this.playerElement.style.left = `${this.playerPos.left}px`
-
-        this.bullets.forEach(bullet => bullet.move())
-        this.clearBullets()
-    }
-
-
-    moveLeft() {
-        if (this.playerPos.left > 0) {
-            this.playerPos.left -= this.playerPhysics.speed.left
-            this.move()
+        if (this.moveFlags.left && this.playerPos.left > 0) {
+            this.playerPos.left -= this.speed;
         }
+        if (this.moveFlags.right && this.playerPos.left + this.playerSize.width < this.gameSize.width) {
+            this.playerPos.left += this.speed;
+        }
+        if (this.moveFlags.up && this.playerPos.top > 0) {
+            this.playerPos.top -= this.speed;
+        }
+        if (this.moveFlags.down && this.playerPos.top + this.playerSize.height < this.gameSize.height) {
+            this.playerPos.top += this.speed;
+        }
+
+        this.playerElement.style.left = `${this.playerPos.left}px`;
+        this.playerElement.style.top = `${this.playerPos.top}px`;
+
+        this.bullets.forEach(bullet => bullet.move());
+        this.clearBullets();
     }
 
-    moveRight() {
-        if (this.playerPos.left + this.playerSize.width < this.gameSize.width) {
-            this.playerPos.left += this.playerPhysics.speed.left
-            this.move()
-        }
-    }
 
-    moveTop() {
-        if (this.playerPos.top > 0) {
-            this.playerPos.top -= this.playerPhysics.speed.top
-            this.move()
-        }
-    }
+    // moveLeft() {
+    //     if (this.playerPos.left > 0) {
+    //         this.playerPos.left -= this.playerPhysics.speed.left
+    //         this.move()
+    //     }
+    // }
 
-    moveBottom() {
-        if (this.playerPos.top + this.playerSize.height < this.gameSize.height) {
-            this.playerPos.top += this.playerPhysics.speed.top
-            this.move()
-        }
-    }
+    // moveRight() {
+    //     if (this.playerPos.left + this.playerSize.width < this.gameSize.width) {
+    //         this.playerPos.left += this.playerPhysics.speed.left
+    //         this.move()
+    //     }
+    // }
+
+    // moveTop() {
+    //     if (this.playerPos.top > 0) {
+    //         this.playerPos.top -= this.playerPhysics.speed.top
+    //         this.move()
+    //     }
+    // }
+
+    // moveBottom() {
+    //     if (this.playerPos.top + this.playerSize.height < this.gameSize.height) {
+    //         this.playerPos.top += this.playerPhysics.speed.top
+    //         this.move()
+    //     }
+    // }
 
     shoot(direction) {
         this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction, this.gameSize));

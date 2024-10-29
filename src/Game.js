@@ -68,34 +68,54 @@ const Game = {
     },
 
     setEventListener() {
-        document.onkeydown = event => {
-            switch (event.code) {
-                case this.keys.LEFT:
-                    this.player.moveLeft();
-                    break;
-                case this.keys.RIGHT:
-                    this.player.moveRight();
-                    break;
-                case this.keys.TOP:
-                    this.player.moveTop();
-                    break;
-                case this.keys.BOTTOM:
-                    this.player.moveBottom();
-                    break;
-                case this.keys.SHOOTLEFT:
-                    this.player.shoot('left');
-                    break;
-                case this.keys.SHOOTRIGHT:
-                    this.player.shoot('right');
-                    break;
-                case this.keys.SHOOTTOP:
-                    this.player.shoot('top');
-                    break;
-                case this.keys.SHOOTBOTTOM:
-                    this.player.shoot('bottom');
-                    break;
-            }
-        };
+        document.addEventListener('keydown', event => this.handleKeyDown(event));
+        document.addEventListener('keyup', event => this.handleKeyUp(event));
+    },
+
+    handleKeyDown(event) {
+        switch (event.code) {
+            case this.keys.LEFT:
+                this.player.moveFlags.left = true;
+                break;
+            case this.keys.RIGHT:
+                this.player.moveFlags.right = true;
+                break;
+            case this.keys.TOP:
+                this.player.moveFlags.up = true;
+                break;
+            case this.keys.BOTTOM:
+                this.player.moveFlags.down = true;
+                break;
+            case this.keys.SHOOTLEFT:
+                this.player.shoot('left');
+                break;
+            case this.keys.SHOOTRIGHT:
+                this.player.shoot('right');
+                break;
+            case this.keys.SHOOTTOP:
+                this.player.shoot('top');
+                break;
+            case this.keys.SHOOTBOTTOM:
+                this.player.shoot('bottom');
+                break;
+        }
+    },
+
+    handleKeyUp(event) {
+        switch (event.code) {
+            case this.keys.LEFT:
+                this.player.moveFlags.left = false;
+                break;
+            case this.keys.RIGHT:
+                this.player.moveFlags.right = false;
+                break;
+            case this.keys.TOP:
+                this.player.moveFlags.up = false;
+                break;
+            case this.keys.BOTTOM:
+                this.player.moveFlags.down = false;
+                break;
+        }
     },
 
     moveAll() {
