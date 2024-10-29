@@ -5,10 +5,11 @@ class Bullets {
         this.playerPos = playerPos
         this.playerSize = playerSize
         this.gameSize = gameSize
+        this.direction = direction // Guardamos la dirección
 
         this.bulletPos = {
-            left: playerPos.left + playerSize.width / 2,
-            top: playerPos.top + playerSize.height / 2
+            left: playerPos.left + playerSize.width / 4,
+            top: playerPos.top + playerSize.height / 4
         }
 
         this.bulletSize = {
@@ -44,15 +45,31 @@ class Bullets {
     }
 
     init() {
-        this.bulletElement = document.createElement('div')
+        this.bulletElement = document.createElement('img')
+        this.bulletElement.src = "imgs/Bullet.png"
 
         this.bulletElement.style.position = "absolute"
         this.bulletElement.style.borderRadius = `50%`
-        this.bulletElement.style.backgroundColor = `red`
         this.bulletElement.style.width = `${this.bulletSize.width}px`
         this.bulletElement.style.height = `${this.bulletSize.height}px`
         this.bulletElement.style.left = `${this.bulletPos.left}px`
         this.bulletElement.style.top = `${this.bulletPos.top}px`
+
+        // Rotación según dirección
+        switch (this.direction) {
+            case 'left':
+                this.bulletElement.style.transform = "rotate(-90deg)"
+                break
+            case 'right':
+                this.bulletElement.style.transform = "rotate(90deg)"
+                break
+            case 'top':
+                this.bulletElement.style.transform = "rotate(0deg)"
+                break
+            case 'bottom':
+                this.bulletElement.style.transform = "rotate(180deg)"
+                break
+        }
 
         document.querySelector('#game-screen').appendChild(this.bulletElement)
     }
@@ -70,7 +87,6 @@ class Bullets {
     }
 
     getBulletLimits() {
-
         return {
             left: this.bulletPos.left,
             top: this.bulletPos.top,

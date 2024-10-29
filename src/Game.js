@@ -6,8 +6,8 @@ const Game = {
     framesCounter: 0,
 
     gameSize: {
-        width: 1700,
-        height: 900
+        width: window.innerWidth,
+        height: window.innerHeight
     },
 
     keys: {
@@ -106,72 +106,69 @@ const Game = {
     },
 
     detectCollision() {
-
-        if (!this.enemy && this.smallEnemies.length == 0) {
-            return false
-        }
         const playerBounds = this.player.getPlayerLimits();
-        const enemyBounds = this.enemy?.getEnemyLimits();
-        if (
-            playerBounds.left < enemyBounds.right &&
-            playerBounds.right > enemyBounds.left &&
-            playerBounds.top < enemyBounds.bottom &&
-            playerBounds.bottom > enemyBounds.top
-        ) {
-            return true
+
+        if (this.enemy) {
+            const enemyBounds = this.enemy.getEnemyLimits();
+            if (
+                playerBounds.left < enemyBounds.right &&
+                playerBounds.right > enemyBounds.left &&
+                playerBounds.top < enemyBounds.bottom &&
+                playerBounds.bottom > enemyBounds.top
+            ) {
+                return true;
+            }
         }
 
         for (let i = 0; i < this.smallEnemies.length; i++) {
-            const smallEnemiesBounds = this.smallEnemies[i].getSmallEnemiesLimits()
+            const smallEnemiesBounds = this.smallEnemies[i].getSmallEnemiesLimits();
             if (
                 playerBounds.left < smallEnemiesBounds.right &&
                 playerBounds.right > smallEnemiesBounds.left &&
                 playerBounds.top < smallEnemiesBounds.bottom &&
                 playerBounds.bottom > smallEnemiesBounds.top
             ) {
-                return true
+                return true;
             }
         }
+
+        return false;
     },
 
     detectBulletImpact() {
-        if (!this.enemy && this.smallEnemies.length == 0) {
-            return false
-        }
-
         this.player.bullets.forEach((bullet, idx) => {
-            const enemyBounds = this.enemy.getEnemyLimits()
-            const bulletBounds = bullet.getBulletLimits()
+            if (this.enemy) {
+                const enemyBounds = this.enemy.getEnemyLimits();
+                const bulletBounds = bullet.getBulletLimits();
 
-            if (
-                bulletBounds.left < enemyBounds.right &&
-                bulletBounds.right > enemyBounds.left &&
-                bulletBounds.top < enemyBounds.bottom &&
-                bulletBounds.bottom > enemyBounds.top
-            ) {
-
-                this.player.bullets.splice(idx, 1)
-                bullet.bulletElement.remove()
-                this.enemy.healthPoints--
+                if (
+                    bulletBounds.left < enemyBounds.right &&
+                    bulletBounds.right > enemyBounds.left &&
+                    bulletBounds.top < enemyBounds.bottom &&
+                    bulletBounds.bottom > enemyBounds.top
+                ) {
+                    this.player.bullets.splice(idx, 1);
+                    bullet.bulletElement.remove();
+                    this.enemy.healthPoints--;
+                }
             }
+
             this.smallEnemies.forEach((smallEnemy, enemyidx) => {
-                const smallEnemiesBounds = smallEnemy.getSmallEnemiesLimits()
+                const smallEnemiesBounds = smallEnemy.getSmallEnemiesLimits();
+                const bulletBounds = bullet.getBulletLimits();
                 if (
                     bulletBounds.left < smallEnemiesBounds.right &&
                     bulletBounds.right > smallEnemiesBounds.left &&
                     bulletBounds.top < smallEnemiesBounds.bottom &&
                     bulletBounds.bottom > smallEnemiesBounds.top
                 ) {
-
-                    this.smallEnemies.splice(enemyidx, 1)
-                    bullet.bulletElement.remove()
-                    smallEnemy.element.remove()
-                    // smallEnemy.healthPoints--
-
-                    console.log("HIT")
+                    this.smallEnemies.splice(enemyidx, 1);
+                    bullet.bulletElement.remove();
+                    smallEnemy.element.remove();
+                    console.log("HIT");
                 }
-            })
-        })
+            });
+        });
     },
 
     eliminateEnemy() {

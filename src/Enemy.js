@@ -26,12 +26,17 @@ class Enemy {
 
     init() {
         this.element = document.createElement('div')
+        this.element = document.createElement('img')
+        this.element.src = "imgs/Boss.png"
+
+
         this.element.style.position = "absolute"
         this.element.style.width = `${this.enemySize.width}px`
         this.element.style.height = `${this.enemySize.height}px`
         this.element.style.left = `${this.position.left}px`
         this.element.style.top = `${this.position.top}px`
-        this.element.style.backgroundColor = 'yellow'
+
+
 
         document.querySelector('#game-screen').appendChild(this.element)
     }

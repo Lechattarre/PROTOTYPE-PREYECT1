@@ -7,8 +7,8 @@ class Player {
         this.bullets = []
 
         this.playerSize = {
-            width: 50,
-            height: 50
+            width: 70,
+            height: 70
         }
 
         this.playerPos = {
@@ -28,14 +28,18 @@ class Player {
     }
 
     init() {
+
         this.playerElement = document.createElement('div')
+        this.playerElement = document.createElement('img')
+        this.playerElement.src = "imgs/Player.png"
+
 
         this.playerElement.style.position = "absolute"
         this.playerElement.style.width = `${this.playerSize.width}px`
         this.playerElement.style.height = `${this.playerSize.height}px`
         this.playerElement.style.left = `${this.playerPos.left}px`
         this.playerElement.style.top = `${this.playerPos.top}px`
-        this.playerElement.style.backgroundColor = `black`
+
 
         document.querySelector('#game-screen').appendChild(this.playerElement)
     }
@@ -78,8 +82,9 @@ class Player {
     }
 
     shoot(direction) {
-        this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction))
+        this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction, this.gameSize));
     }
+
     clearBullets() {
         this.bullets.forEach((bullet, idx) => {
             if (
