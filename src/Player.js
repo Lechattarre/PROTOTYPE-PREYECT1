@@ -16,6 +16,7 @@ class Player {
             top: gameSize.height - this.playerSize.height
         }
 
+
         this.playerPhysics = {
             speed: {
                 left: 50,

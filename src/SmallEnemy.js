@@ -4,8 +4,8 @@ class SmallEnemy {
         this.gameSize = gameSize
 
         this.size = {
-            width: 30,
-            height: 30
+            width: 50,
+            height: 50
         }
 
         this.position = {
@@ -27,12 +27,15 @@ class SmallEnemy {
 
     init() {
         this.element = document.createElement('div')
+        this.element = document.createElement('img')
+        this.element.src = "imgs/Smallenemy.png"
+
         this.element.style.position = "absolute"
         this.element.style.width = `${this.size.width}px`
         this.element.style.height = `${this.size.height}px`
         this.element.style.left = `${this.position.left}px`
         this.element.style.top = `${this.position.top}px`
-        this.element.style.backgroundColor = 'green'
+
 
         document.querySelector('#game-screen').appendChild(this.element)
     }
