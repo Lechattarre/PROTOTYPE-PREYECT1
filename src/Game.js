@@ -151,7 +151,7 @@ const Game = {
                 playerBounds.top < enemyBounds.bottom &&
                 playerBounds.bottom > enemyBounds.top
             ) {
-                this.player.healthPoints--
+                this.player.receiveDamage(1)
                 console.log(this.player.healthPoints)
                 return true;
             }
@@ -166,7 +166,10 @@ const Game = {
                 playerBounds.bottom > smallEnemiesBounds.top
             ) {
 
-                this.player.healthPoints--
+              
+
+                this.player.receiveDamage(1)
+
                 console.log(this.player.healthPoints)
                 return true;
             }

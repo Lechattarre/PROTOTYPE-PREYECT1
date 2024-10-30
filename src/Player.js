@@ -33,8 +33,8 @@ class Player {
 
         this.speed = 9
 
-        this.healthPoints = 50
-        this.maxHealth = 50
+        this.healthPoints = 70
+        this.maxHealth = 70
 
         this.flashCount = 3;
 
@@ -171,11 +171,11 @@ class Player {
 
     updateHealthBar() {
         const currentHealth = (this.healthPoints / this.maxHealth) * 100
-        this.barFillElement.style.width = `${currentHealth}`
+        this.barFillElement.style.width = `${currentHealth}px`
     }
 
-    receiveDamage() {
-
+    receiveDamage(amount) {
+        this.healthPoints = Math.max(0, this.healthPoints - amount)
         this.updateHealthBar()
     }
 }
