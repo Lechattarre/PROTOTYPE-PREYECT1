@@ -34,7 +34,14 @@ class Player {
         this.speed = 9
 
         this.healthPoints = 50
+        this.maxHealth = 50
 
+        this.healthBar = {
+            width: 450,
+            height: 30
+        }
+
+        this.createHealthBar()
         this.init()
     }
 
@@ -76,35 +83,6 @@ class Player {
         this.clearBullets();
     }
 
-
-    // moveLeft() {
-    //     if (this.playerPos.left > 0) {
-    //         this.playerPos.left -= this.playerPhysics.speed.left
-    //         this.move()
-    //     }
-    // }
-
-    // moveRight() {
-    //     if (this.playerPos.left + this.playerSize.width < this.gameSize.width) {
-    //         this.playerPos.left += this.playerPhysics.speed.left
-    //         this.move()
-    //     }
-    // }
-
-    // moveTop() {
-    //     if (this.playerPos.top > 0) {
-    //         this.playerPos.top -= this.playerPhysics.speed.top
-    //         this.move()
-    //     }
-    // }
-
-    // moveBottom() {
-    //     if (this.playerPos.top + this.playerSize.height < this.gameSize.height) {
-    //         this.playerPos.top += this.playerPhysics.speed.top
-    //         this.move()
-    //     }
-    // }
-
     shoot(direction) {
         this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction, this.gameSize));
     }
@@ -132,5 +110,34 @@ class Player {
             width: this.playerSize.width,
             height: this.playerSize.height
         }
+    }
+
+    createHealthBar() {
+        this.healthBarElement = document.createElement("div")
+
+        this.healthBarElement.style.position = "absolute"
+        this.healthBarElement.style.width = `${this.healthBar.width}px`
+        this.healthBarElement.style.height = `${this.healthBar.height}px`
+        this.healthBarElement.style.top = "40px"
+        this.healthBarElement.style.left = "30px"
+        this.healthBarElement.style.backgroundColor = "gray"
+
+        this.barFillElement = document.createElement("div")
+        this.barFillElement.style.width = "100%"
+        this.barFillElement.style.height = "100%"
+        this.barFillElement.style.backgroundColor = "yellow"
+
+        this.healthBarElement.appendChild(this.barFillElement)
+        document.querySelector('#game-screen').appendChild(this.healthBarElement)
+    }
+
+    updateHealthBar() {
+        const currentHealth = (this.healthPoints / this.maxHealth) * 100
+        this.barFillElement.style.width = `${currentHealth}`
+    }
+
+    receiveDamage() {
+
+        this.updateHealthBar()
     }
 }
