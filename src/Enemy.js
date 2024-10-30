@@ -3,8 +3,8 @@ class Enemy {
         this.gameSize = gameSize
 
         this.enemySize = {
-            width: 550,
-            height: 550
+            width: 280,
+            height: 280
         };
 
         this.position = {
@@ -15,7 +15,7 @@ class Enemy {
         this.physics = {
             speed: {
                 left: 5.5,
-                top: 7
+                top: 5
             }
         }
         this.diesound = new Audio('sound/blood.wav')
