@@ -4,6 +4,10 @@ const Game = {
     version: '1.0',
     license: undefined,
     framesCounter: 0,
+    backgroundMusic: new Audio('sounds/soundtrack.mp3'),
+
+
+
 
     gameSize: {
         width: window.innerWidth,
@@ -22,6 +26,7 @@ const Game = {
     },
 
     smallEnemies: [],
+
     smallEnemiesQuantity: 5,
     waveCounter: 0,
 
@@ -31,6 +36,10 @@ const Game = {
     },
 
     start() {
+        this.backgroundMusic.loop = true;
+        this.backgroundMusic.volume = 0.2;
+        this.backgroundMusic.play();
+
         this.createElements();
         this.setEventListener();
         this.startGameLoop();
@@ -156,17 +165,23 @@ const Game = {
                 playerBounds.top < smallEnemiesBounds.bottom &&
                 playerBounds.bottom > smallEnemiesBounds.top
             ) {
+
+              
+
                 this.player.receiveDamage(1)
+
                 console.log(this.player.healthPoints)
                 return true;
             }
+
+
         }
 
         return false;
     },
 
     detectBulletImpact() {
-        this.player.bullets.forEach((bullet, idx) => {
+        this.player.bullets.forEach((bullet, bulletIdx) => {
             if (this.enemy) {
                 const enemyBounds = this.enemy.getEnemyLimits();
                 const bulletBounds = bullet.getBulletLimits();
@@ -177,28 +192,36 @@ const Game = {
                     bulletBounds.top < enemyBounds.bottom &&
                     bulletBounds.bottom > enemyBounds.top
                 ) {
-                    this.player.bullets.splice(idx, 1);
+                    this.player.bullets.splice(bulletIdx, 1);
                     bullet.bulletElement.remove();
                     this.enemy.healthPoints--;
                 }
             }
 
-            this.smallEnemies.forEach((smallEnemy, enemyidx) => {
-                const smallEnemiesBounds = smallEnemy.getSmallEnemiesLimits();
+            this.smallEnemies.forEach((smallEnemy, smallEnemyIdx) => {
+                const smallEnemyBounds = smallEnemy.getSmallEnemiesLimits();
                 const bulletBounds = bullet.getBulletLimits();
+
                 if (
-                    bulletBounds.left < smallEnemiesBounds.right &&
-                    bulletBounds.right > smallEnemiesBounds.left &&
-                    bulletBounds.top < smallEnemiesBounds.bottom &&
-                    bulletBounds.bottom > smallEnemiesBounds.top
+                    bulletBounds.left < smallEnemyBounds.right &&
+                    bulletBounds.right > smallEnemyBounds.left &&
+                    bulletBounds.top < smallEnemyBounds.bottom &&
+                    bulletBounds.bottom > smallEnemyBounds.top
                 ) {
-                    this.smallEnemies.splice(enemyidx, 1);
-                    bullet.bulletElement.remove();
-                    this.player.bullets.splice(idx, 1);
+
+
+
                     smallEnemy.element.remove();
-                    console.log("HIT");
+                    bullet.bulletElement.remove();
+                    this.smallEnemies.splice(smallEnemyIdx, 1);
+                    this.player.bullets.splice(bulletIdx, 1);
+
+
                 }
+
+
             });
+
         });
     },
 
