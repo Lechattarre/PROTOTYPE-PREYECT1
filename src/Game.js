@@ -51,8 +51,8 @@ const Game = {
     },
 
     createElements() {
-        this.player = new Player(this.gameSize);
-        this.enemy = new Enemy(this.gameSize);
+        this.player = new Player(this.gameSize)
+        this.enemy = new Enemy(this.gameSize)
         this.createSmallEnemies();
     },
 
@@ -166,7 +166,7 @@ const Game = {
                 playerBounds.bottom > smallEnemiesBounds.top
             ) {
 
-              
+
 
                 this.player.receiveDamage(1)
 
