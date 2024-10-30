@@ -206,16 +206,19 @@ const Game = {
                     bulletBounds.bottom > smallEnemyBounds.top
                 ) {
 
-                    this.hitSound.currentTime = 0;
-                    this.hitSound.play();
 
 
                     smallEnemy.element.remove();
                     bullet.bulletElement.remove();
                     this.smallEnemies.splice(smallEnemyIdx, 1);
                     this.player.bullets.splice(bulletIdx, 1);
+
+
                 }
+
+
             });
+
         });
     },
 
