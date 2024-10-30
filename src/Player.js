@@ -36,17 +36,14 @@ class Player {
         this.healthPoints = 50
         this.maxHealth = 50
 
-<<<<<<< HEAD
         this.flashCount = 3;
 
-=======
         this.healthBar = {
             width: 450,
             height: 30
         }
 
         this.createHealthBar()
->>>>>>> b4d33417779b59d1bf8966caf4dc7fe919b961eb
         this.init()
     }
 
@@ -88,7 +85,6 @@ class Player {
         this.clearBullets();
     }
 
-<<<<<<< HEAD
     flash(moveFlags) {
         if (this.flashCount > 0) {
             const flashDistance = 500;
@@ -113,8 +109,6 @@ class Player {
     }
 
 
-=======
->>>>>>> b4d33417779b59d1bf8966caf4dc7fe919b961eb
     shoot(direction) {
         this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction, this.gameSize));
     }
