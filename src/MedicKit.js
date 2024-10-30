@@ -25,4 +25,15 @@ class MedicKit {
         document.querySelector('#game-screen').appendChild(this.element)
 
     }
+
+    getMedicKitLimits() {
+        return {
+            left: this.position.left,
+            top: this.position.top,
+            right: this.position.left + this.medicKitSize.width,
+            bottom: this.position.top + this.medicKitSize.height,
+            width: this.medicKitSize.width,
+            height: this.medicKitSize.height
+        }
+    }
 }

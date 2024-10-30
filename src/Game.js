@@ -53,6 +53,7 @@ const Game = {
     createElements() {
         this.player = new Player(this.gameSize)
         this.enemy = new Enemy(this.gameSize)
+        this.medicKit = new MedicKit(this.gameSize)
         this.createSmallEnemies();
     },
 
@@ -71,7 +72,7 @@ const Game = {
             if (this.player.healthPoints === 0) {
                 this.gameOver()
             }
-
+            this.pickHealth()
             this.detectBulletImpact();
             this.eliminateEnemy();
             this.checkWin();
@@ -165,11 +166,7 @@ const Game = {
                 playerBounds.top < smallEnemiesBounds.bottom &&
                 playerBounds.bottom > smallEnemiesBounds.top
             ) {
-
-
-
                 this.player.receiveDamage(1)
-
                 console.log(this.player.healthPoints)
                 return true;
             }
@@ -223,6 +220,24 @@ const Game = {
             });
 
         });
+    },
+
+    pickHealth() {
+        if (this.medicKit) {
+            const playerBounds = this.player.getPlayerLimits()
+            const medicKitBounds = this.medicKit.getMedicKitLimits()
+            if (playerBounds.left < medicKitBounds.right &&
+                playerBounds.right > medicKitBounds.left &&
+                playerBounds.top < medicKitBounds.bottom &&
+                playerBounds.bottom > medicKitBounds.top) {
+
+                this.medicKit.element.remove()
+                this.medicKit = null
+                this.player.healDamage(10)
+
+            }
+            return false
+        }
     },
 
     eliminateEnemy() {

@@ -91,7 +91,7 @@ class Player {
 
     flash(moveFlags) {
         if (this.flashCount > 0) {
-            const flashDistance = 500;
+            const flashDistance = 300;
 
             if (moveFlags.left) {
                 this.playerPos.left = Math.max(0, this.playerPos.left - flashDistance);
@@ -176,6 +176,14 @@ class Player {
 
     receiveDamage(amount) {
         this.healthPoints = Math.max(0, this.healthPoints - amount)
+        this.updateHealthBar()
+    }
+
+    healDamage(amount) {
+        if (this.maxHealth <= this.healthPoints + amount) {
+            return this.healthPoints = this.maxHealth
+        }
+        this.healthPoints = Math.min(this.healthPoints + amount)
         this.updateHealthBar()
     }
 }
