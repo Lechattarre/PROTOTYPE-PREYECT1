@@ -21,7 +21,14 @@ class Enemy {
         this.diesound = new Audio('sound/blood.wav')
 
         this.healthPoints = 50
+        this.maxHealth = 50
 
+        this.healthBar = {
+            width: 450,
+            height: 30
+        }
+
+        this.createHealthBar()
         this.init()
     }
 
@@ -69,4 +76,25 @@ class Enemy {
             height: this.enemySize.height
         }
     }
+
+    createHealthBar() {
+        this.enemyHealthBarElement = document.createElement("div")
+
+        this.enemyHealthBarElement.style.position = "absolute"
+        this.enemyHealthBarElement.style.width = `${this.healthBar.width}px`
+        this.enemyHealthBarElement.style.height = `${this.healthBar.height}px`
+        this.enemyHealthBarElement.style.top = "40px"
+        this.enemyHealthBarElement.style.left = "1000px"
+        this.enemyHealthBarElement.style.backgroundColor = "gray"
+
+        this.enemyBarFillElement = document.createElement("div")
+        this.enemyBarFillElement.style.width = "100%"
+        this.enemyBarFillElement.style.height = "100%"
+        this.enemyBarFillElement.style.backgroundColor = "red"
+
+        this.enemyHealthBarElement.appendChild(this.enemyBarFillElement)
+        document.querySelector('#game-screen').appendChild(this.enemyHealthBarElement)
+    }
+
+
 }
