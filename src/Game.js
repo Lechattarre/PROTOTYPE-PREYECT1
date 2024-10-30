@@ -53,7 +53,11 @@ const Game = {
     createElements() {
         this.player = new Player(this.gameSize)
         this.enemy = new Enemy(this.gameSize)
+<<<<<<< HEAD
         this.medicKit = new MedicKit(this.gameSize)
+=======
+        this.medicKit = new MedicKit(this.gameSize);
+>>>>>>> 6435565a9e9dcc6dc8b689857717ac9a62e75845
         this.createSmallEnemies();
     },
 
