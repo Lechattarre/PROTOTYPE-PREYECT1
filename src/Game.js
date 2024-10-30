@@ -58,7 +58,10 @@ const Game = {
         setInterval(() => {
             this.moveAll();
 
-            if (this.detectCollision()) this.gameOver();
+            this.detectCollision()
+            if (this.player.healthPoints === 0) {
+                this.gameOver()
+            }
 
             this.detectBulletImpact();
             this.eliminateEnemy();
@@ -136,6 +139,8 @@ const Game = {
                 playerBounds.top < enemyBounds.bottom &&
                 playerBounds.bottom > enemyBounds.top
             ) {
+                this.player.healthPoints--
+                console.log(this.player.healthPoints)
                 return true;
             }
         }
@@ -148,6 +153,8 @@ const Game = {
                 playerBounds.top < smallEnemiesBounds.bottom &&
                 playerBounds.bottom > smallEnemiesBounds.top
             ) {
+                this.player.healthPoints--
+                console.log(this.player.healthPoints)
                 return true;
             }
         }

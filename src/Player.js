@@ -33,6 +33,8 @@ class Player {
 
         this.speed = 9
 
+        this.healthPoints = 50
+
         this.init()
     }
 
