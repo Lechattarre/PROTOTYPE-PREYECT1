@@ -34,9 +34,19 @@ class Player {
         this.speed = 9
 
         this.healthPoints = 50
+        this.maxHealth = 50
 
+<<<<<<< HEAD
         this.flashCount = 3;
 
+=======
+        this.healthBar = {
+            width: 450,
+            height: 30
+        }
+
+        this.createHealthBar()
+>>>>>>> b4d33417779b59d1bf8966caf4dc7fe919b961eb
         this.init()
     }
 
@@ -78,6 +88,7 @@ class Player {
         this.clearBullets();
     }
 
+<<<<<<< HEAD
     flash(moveFlags) {
         if (this.flashCount > 0) {
             const flashDistance = 500;
@@ -102,6 +113,8 @@ class Player {
     }
 
 
+=======
+>>>>>>> b4d33417779b59d1bf8966caf4dc7fe919b961eb
     shoot(direction) {
         this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction, this.gameSize));
     }
@@ -129,5 +142,34 @@ class Player {
             width: this.playerSize.width,
             height: this.playerSize.height
         }
+    }
+
+    createHealthBar() {
+        this.healthBarElement = document.createElement("div")
+
+        this.healthBarElement.style.position = "absolute"
+        this.healthBarElement.style.width = `${this.healthBar.width}px`
+        this.healthBarElement.style.height = `${this.healthBar.height}px`
+        this.healthBarElement.style.top = "40px"
+        this.healthBarElement.style.left = "30px"
+        this.healthBarElement.style.backgroundColor = "gray"
+
+        this.barFillElement = document.createElement("div")
+        this.barFillElement.style.width = "100%"
+        this.barFillElement.style.height = "100%"
+        this.barFillElement.style.backgroundColor = "yellow"
+
+        this.healthBarElement.appendChild(this.barFillElement)
+        document.querySelector('#game-screen').appendChild(this.healthBarElement)
+    }
+
+    updateHealthBar() {
+        const currentHealth = (this.healthPoints / this.maxHealth) * 100
+        this.barFillElement.style.width = `${currentHealth}`
+    }
+
+    receiveDamage() {
+
+        this.updateHealthBar()
     }
 }
