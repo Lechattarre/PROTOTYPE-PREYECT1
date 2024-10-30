@@ -22,9 +22,8 @@ const Game = {
     },
 
     smallEnemies: [],
-
-    smallEnemiesQuantity: 10,
-
+    smallEnemiesQuantity: 5, // Puedes ajustar la cantidad de enemigos por oleada
+    waveCounter: 0, // Contador de oleadas
 
     init() {
         this.setDimensions();
@@ -45,24 +44,25 @@ const Game = {
     createElements() {
         this.player = new Player(this.gameSize);
         this.enemy = new Enemy(this.gameSize);
+        this.createSmallEnemies(); // Crear enemigos pequeños al iniciar
+    },
 
-
+    createSmallEnemies() {
+        this.smallEnemies = []; // Reiniciar el array de enemigos
         for (let i = 0; i < this.smallEnemiesQuantity; i++) {
             this.smallEnemies.push(new SmallEnemy(this.gameSize));
         }
-
     },
 
     startGameLoop() {
         setInterval(() => {
+            this.moveAll();
 
-            this.moveAll()
+            if (this.detectCollision()) this.gameOver();
 
-            if (this.detectCollision()) this.gameOver()
-
-            this.detectBulletImpact()
-            this.eliminateEnemy()
-            this.checkWin()
+            this.detectBulletImpact();
+            this.eliminateEnemy(); // Verificar enemigos eliminados
+            this.checkWin();
 
         }, 1000 / 60);
     },
@@ -119,10 +119,10 @@ const Game = {
     },
 
     moveAll() {
-        this.player.move()
-        this.player.bullets.forEach(bullet => bullet.move())
-        this.enemy?.move()
-        this.smallEnemies.forEach(smallEnemy => smallEnemy.move())
+        this.player.move();
+        this.player.bullets.forEach(bullet => bullet.move());
+        this.enemy?.move();
+        this.smallEnemies.forEach(smallEnemy => smallEnemy.move());
     },
 
     detectCollision() {
@@ -184,7 +184,7 @@ const Game = {
                 ) {
                     this.smallEnemies.splice(enemyidx, 1);
                     bullet.bulletElement.remove();
-                    this.player.bullets.splice(idx, 1)
+                    this.player.bullets.splice(idx, 1);
                     smallEnemy.element.remove();
                     console.log("HIT");
                 }
@@ -195,18 +195,27 @@ const Game = {
     eliminateEnemy() {
         if (this.enemy && this.enemy.healthPoints === 0) {
             this.enemy.element.remove();
+            this.enemy = null;
+        }
 
-            this.enemy = null
+
+        if (this.smallEnemies.length === 0) {
+            this.waveCounter++;
+            if (this.waveCounter < 3) {
+                this.createSmallEnemies();
+                console.log(`¡Oleada ${this.waveCounter + 1} iniciada!`);
+
+            }
         }
     },
 
-
     gameOver() {
-        alert("perdiste por malo")
+        alert("Perdiste por malo");
     },
+
     checkWin() {
         if (!this.enemy && this.smallEnemies.length === 0) {
-            return alert("GANASTE")
+            return alert("GANASTE");
         }
     }
 };
