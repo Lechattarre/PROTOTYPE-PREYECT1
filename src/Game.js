@@ -22,8 +22,8 @@ const Game = {
     },
 
     smallEnemies: [],
-    smallEnemiesQuantity: 5, // Puedes ajustar la cantidad de enemigos por oleada
-    waveCounter: 0, // Contador de oleadas
+    smallEnemiesQuantity: 5,
+    waveCounter: 0,
 
     init() {
         this.setDimensions();
@@ -44,11 +44,11 @@ const Game = {
     createElements() {
         this.player = new Player(this.gameSize);
         this.enemy = new Enemy(this.gameSize);
-        this.createSmallEnemies(); // Crear enemigos pequeños al iniciar
+        this.createSmallEnemies();
     },
 
     createSmallEnemies() {
-        this.smallEnemies = []; // Reiniciar el array de enemigos
+        this.smallEnemies = [];
         for (let i = 0; i < this.smallEnemiesQuantity; i++) {
             this.smallEnemies.push(new SmallEnemy(this.gameSize));
         }
@@ -61,7 +61,7 @@ const Game = {
             if (this.detectCollision()) this.gameOver();
 
             this.detectBulletImpact();
-            this.eliminateEnemy(); // Verificar enemigos eliminados
+            this.eliminateEnemy();
             this.checkWin();
 
         }, 1000 / 60);
