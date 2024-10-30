@@ -223,7 +223,7 @@ const Game = {
     },
 
     pickHealth() {
-        if (this.medicKit) {
+        if (this.medicKit && this.player.healthPoints <= this.player.maxHealth - 10) {
             const playerBounds = this.player.getPlayerLimits()
             const medicKitBounds = this.medicKit.getMedicKitLimits()
             if (playerBounds.left < medicKitBounds.right &&
