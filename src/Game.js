@@ -23,7 +23,7 @@ const Game = {
 
     smallEnemies: [],
 
-    smallEnemiesQuantity: 5,
+    smallEnemiesQuantity: 10,
 
 
     init() {
@@ -184,6 +184,7 @@ const Game = {
                 ) {
                     this.smallEnemies.splice(enemyidx, 1);
                     bullet.bulletElement.remove();
+                    this.player.bullets.splice(idx, 1)
                     smallEnemy.element.remove();
                     console.log("HIT");
                 }
@@ -198,15 +199,7 @@ const Game = {
             this.enemy = null
         }
     },
-    // eliminateSmallenemies() {
-    //     if (this.smallEnemies && this.s.healthPoints === 0) {
-    //         this.enemy.element.remove();
-    //         if (this.enemy.timerId) {
-    //             clearTimeout(this.enemy.timerId);
-    //         }
-    //         this.enemy = null
-    //     }
-    // },
+
 
     gameOver() {
         alert("perdiste por malo")
