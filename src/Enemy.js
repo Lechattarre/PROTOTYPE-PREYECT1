@@ -18,6 +18,7 @@ class Enemy {
                 top: 2
             }
         }
+        this.diesound = new Audio('sound/blood.wav')
 
         this.healthPoints = 50
 

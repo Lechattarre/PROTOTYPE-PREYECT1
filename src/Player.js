@@ -40,7 +40,7 @@ class Player {
 
         this.flashSound = new Audio('sounds/flash.wav')
 
-        this.shootSound = new Audio('so unds/mixkit-game-gun-shot-1662.mp3')
+        this.shootSound = new Audio('sounds/shoot.mp3')
 
         this.healthBar = {
             width: 450,
@@ -118,8 +118,9 @@ class Player {
 
 
     shoot(direction) {
-        this.shootSound.currentTime = 0;
-        this.shootSound.play();
+        this.shootSound.currentTime = 0
+        this.shootSound.volume = 0.5
+        this.shootSound.play()
 
         this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction, this.gameSize));
     }

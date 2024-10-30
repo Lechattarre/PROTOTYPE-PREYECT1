@@ -21,6 +21,8 @@ class SmallEnemy {
         }
         this.healthPoints = 3
 
+        this.dieSound = new Audio('sounds/blood.wav')
+
         this.init();
 
     }
