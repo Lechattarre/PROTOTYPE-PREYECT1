@@ -118,6 +118,9 @@ const Game = {
             case this.keys.BOTTOM:
                 this.player.moveFlags.down = false;
                 break;
+            case 'Space':
+                this.player.flash(this.player.moveFlags);
+                break;
         }
     },
 

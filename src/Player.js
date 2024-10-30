@@ -35,6 +35,8 @@ class Player {
 
         this.healthPoints = 50
 
+        this.flashCount = 3;
+
         this.init()
     }
 
@@ -76,34 +78,29 @@ class Player {
         this.clearBullets();
     }
 
+    flash(moveFlags) {
+        if (this.flashCount > 0) {
+            const flashDistance = 500;
 
-    // moveLeft() {
-    //     if (this.playerPos.left > 0) {
-    //         this.playerPos.left -= this.playerPhysics.speed.left
-    //         this.move()
-    //     }
-    // }
+            if (moveFlags.left) {
+                this.playerPos.left = Math.max(0, this.playerPos.left - flashDistance);
+            }
+            if (moveFlags.right) {
+                this.playerPos.left = Math.min(this.gameSize.width - this.playerSize.width, this.playerPos.left + flashDistance);
+            }
+            if (moveFlags.up) {
+                this.playerPos.top = Math.max(0, this.playerPos.top - flashDistance);
+            }
+            if (moveFlags.down) {
+                this.playerPos.top = Math.min(this.gameSize.height - this.playerSize.height, this.playerPos.top + flashDistance);
+            }
+            this.flashCount--
 
-    // moveRight() {
-    //     if (this.playerPos.left + this.playerSize.width < this.gameSize.width) {
-    //         this.playerPos.left += this.playerPhysics.speed.left
-    //         this.move()
-    //     }
-    // }
+            this.playerElement.style.left = `${this.playerPos.left}px`;
+            this.playerElement.style.top = `${this.playerPos.top}px`;
+        }
+    }
 
-    // moveTop() {
-    //     if (this.playerPos.top > 0) {
-    //         this.playerPos.top -= this.playerPhysics.speed.top
-    //         this.move()
-    //     }
-    // }
-
-    // moveBottom() {
-    //     if (this.playerPos.top + this.playerSize.height < this.gameSize.height) {
-    //         this.playerPos.top += this.playerPhysics.speed.top
-    //         this.move()
-    //     }
-    // }
 
     shoot(direction) {
         this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction, this.gameSize));
