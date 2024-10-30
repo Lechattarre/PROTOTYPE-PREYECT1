@@ -38,6 +38,10 @@ class Player {
 
         this.flashCount = 3;
 
+        this.flashSound = new Audio('sounds/flash.wav')
+
+        this.shootSound = new Audio('so unds/mixkit-game-gun-shot-1662.mp3')
+
         this.healthBar = {
             width: 450,
             height: 30
@@ -103,13 +107,20 @@ class Player {
             }
             this.flashCount--
 
-            this.playerElement.style.left = `${this.playerPos.left}px`;
-            this.playerElement.style.top = `${this.playerPos.top}px`;
+            this.playerElement.style.left = `${this.playerPos.left}px`
+            this.playerElement.style.top = `${this.playerPos.top}px`
+
+            this.flashSound.currentTime = 0
+            this.flashSound.volume = 0.2
+            this.flashSound.play()
         }
     }
 
 
     shoot(direction) {
+        this.shootSound.currentTime = 0;
+        this.shootSound.play();
+
         this.bullets.push(new Bullets(this.playerPos, this.playerSize, direction, this.gameSize));
     }
 

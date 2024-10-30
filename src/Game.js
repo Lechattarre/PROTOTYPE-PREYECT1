@@ -4,6 +4,7 @@ const Game = {
     version: '1.0',
     license: undefined,
     framesCounter: 0,
+    backgroundMusic: new Audio('sounds/soundtrack'),
 
     gameSize: {
         width: window.innerWidth,
@@ -31,6 +32,10 @@ const Game = {
     },
 
     start() {
+        this.backgroundMusic.loop = true;
+        this.backgroundMusic.volume = 0.2;
+        this.backgroundMusic.play();
+
         this.createElements();
         this.setEventListener();
         this.startGameLoop();
