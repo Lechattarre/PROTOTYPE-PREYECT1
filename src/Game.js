@@ -8,6 +8,7 @@ const Game = {
     backgroundMusic: new Audio('sounds/soundtrackshort.mp3'),
     deathSound: new Audio('sounds/gameOver.wav'),
     winSound: new Audio('sounds/win.wav'),
+    isGameOver: false,
 
     gameSize: {
         width: window.innerWidth,
@@ -254,11 +255,13 @@ const Game = {
     },
 
     gameOver() {
-        window.location.href = 'looseScreen.html'
-        this.deathSound.play();
-
-
-
+        if (!this.isGameOver) {
+            this.isGameOver = true;
+            this.deathSound.play();
+            setTimeout(() => {
+                window.location.href = 'looseScreen.html';
+            }, 4000);
+        }
     },
 
     checkWin() {
