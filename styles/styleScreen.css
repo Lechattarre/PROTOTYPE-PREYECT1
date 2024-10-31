@@ -83,14 +83,14 @@ img {
 }
 
 .descriptionOfGame article :hover {
-    background-color: rgb(98, 249, 92);
-    box-shadow: 5px 5px 10px rgb(109, 166, 3);
+    background-color: rgb(40, 0, 0);
+    box-shadow: 5px 5px 10px rgb(40, 0, 0);
     width: 350px;
     height: 350px;
     display: flex;
     flex-wrap: wrap;
     border-radius: 25px;
-    color: black;
-    text-shadow: 3px 2px 5px black;
+
+
     transition: 1.5s;
 }
