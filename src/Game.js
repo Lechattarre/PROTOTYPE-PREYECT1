@@ -1,5 +1,5 @@
 const Game = {
-    name: 'Killer teacher',
+    name: 'MERCHES DUNGEON',
     author: 'john & ivan',
     version: '1.0',
     license: undefined,
