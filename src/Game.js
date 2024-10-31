@@ -7,7 +7,7 @@ const Game = {
     framesCounter: 0,
     backgroundMusic: new Audio('sounds/soundtrackshort.mp3'),
     deathSound: new Audio('sounds/gameOver.wav'),
-    winSound: new Audio('sounds/win.wav'),
+    winSound: new Audio('sounds/Win.wav'),
     isGameOver: false,
 
     gameSize: {
@@ -136,10 +136,12 @@ const Game = {
     },
 
     moveAll() {
-        this.player.move();
-        this.player.bullets.forEach(bullet => bullet.move());
-        this.enemy?.move();
-        this.smallEnemies.forEach(smallEnemy => smallEnemy.move());
+        if (!this.isGameOver) {
+            this.player.move();
+            this.player.bullets.forEach(bullet => bullet.move());
+            this.enemy?.move();
+            this.smallEnemies.forEach(smallEnemy => smallEnemy.move());
+        }
     },
 
     detectCollision() {
@@ -246,7 +248,7 @@ const Game = {
 
         if (this.smallEnemies.length === 0) {
             this.waveCounter++;
-            if (this.waveCounter < 1) {
+            if (this.waveCounter < 6) {
                 this.createSmallEnemies();
                 console.log(`¡Oleada ${this.waveCounter + 1} iniciada!`);
 
@@ -266,11 +268,10 @@ const Game = {
 
     checkWin() {
         if (!this.enemy && this.smallEnemies.length === 0) {
-
             this.winSound.play();
             setTimeout(() => {
                 window.location.href = 'winScreen.html';
-            }, 1000);
+            }, 4000);
         }
     }
 };

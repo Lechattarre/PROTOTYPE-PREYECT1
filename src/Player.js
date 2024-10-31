@@ -36,7 +36,7 @@ class Player {
         this.healthPoints = 33
         this.maxHealth = 33
 
-        this.flashCount = 3;
+        this.flashCount = 3
 
         this.flashSound = new Audio('sounds/flash.wav')
 
@@ -51,6 +51,7 @@ class Player {
         this.imageLeft = "imgs/PlayerLeft.png"
         this.currentDirection = "right"
 
+        this.createFlashCounter()
         this.createHealthBar()
         this.init()
     }
@@ -117,6 +118,7 @@ class Player {
                 this.playerPos.top = Math.min(this.gameSize.height - this.playerSize.height, this.playerPos.top + flashDistance);
             }
             this.flashCount--
+            this.updateFlashCounter()
 
             this.playerElement.style.left = `${this.playerPos.left}px`
             this.playerElement.style.top = `${this.playerPos.top}px`
@@ -196,5 +198,25 @@ class Player {
         }
         this.healthPoints = Math.min(this.healthPoints + amount)
         this.updateHealthBar()
+    }
+
+    createFlashCounter() {
+        this.flashCounterElement = document.createElement('div')
+
+        this.flashCounterElement.style.position = "absolute"
+        this.flashCounterElement.style.top = "80px"
+        this.flashCounterElement.style.left = "30px"
+        this.flashCounterElement.style.fontSize = "24px"
+        this.flashCounterElement.style.color = "yellow"
+        this.flashCounterElement.style.fontFamily = "Tiny5, sans-serif"
+
+        this.updateFlashCounter()
+
+        document.querySelector('#game-screen').appendChild(this.flashCounterElement)
+    }
+
+    updateFlashCounter() {
+        this.flashCounterElement.textContent = `Flash available: ${this.flashCount}`
+
     }
 }
