@@ -254,8 +254,8 @@ const Game = {
     },
 
     gameOver() {
-        alert('perdiste')
-        return this.deathSound.play();
+        window.location.href = 'looseScreen.html'
+        this.deathSound.play();
 
 
 
@@ -263,8 +263,9 @@ const Game = {
 
     checkWin() {
         if (!this.enemy && this.smallEnemies.length === 0) {
-            alert('you win')
-            return this.winSound.play();
+
+            this.winSound.play();
+            window.location.href = 'winScreen.html'
         }
     }
 };
