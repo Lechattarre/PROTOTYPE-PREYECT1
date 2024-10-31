@@ -27,7 +27,7 @@ const Game = {
 
     smallEnemies: [],
 
-    smallEnemiesQuantity: 5,
+    smallEnemiesQuantity: 6,
     waveCounter: 0,
 
     init() {
@@ -245,7 +245,7 @@ const Game = {
 
         if (this.smallEnemies.length === 0) {
             this.waveCounter++;
-            if (this.waveCounter < 3) {
+            if (this.waveCounter < 6) {
                 this.createSmallEnemies();
                 console.log(`¡Oleada ${this.waveCounter + 1} iniciada!`);
 
