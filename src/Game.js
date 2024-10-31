@@ -268,7 +268,9 @@ const Game = {
         if (!this.enemy && this.smallEnemies.length === 0) {
 
             this.winSound.play();
-            window.location.href = 'winScreen.html'
+            setTimeout(() => {
+                window.location.href = 'looseScreen.html';
+            }, 4000);
         }
     }
 };
