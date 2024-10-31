@@ -246,7 +246,7 @@ const Game = {
 
         if (this.smallEnemies.length === 0) {
             this.waveCounter++;
-            if (this.waveCounter < 6) {
+            if (this.waveCounter < 1) {
                 this.createSmallEnemies();
                 console.log(`¡Oleada ${this.waveCounter + 1} iniciada!`);
 
@@ -269,8 +269,8 @@ const Game = {
 
             this.winSound.play();
             setTimeout(() => {
-                window.location.href = 'looseScreen.html';
-            }, 4000);
+                window.location.href = 'winScreen.html';
+            }, 1000);
         }
     }
 };
