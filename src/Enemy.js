@@ -20,13 +20,18 @@ class Enemy {
         }
         this.diesound = new Audio('sound/blood.wav')
 
-        this.healthPoints = 50
-        this.maxHealth = 50
+        this.healthPoints = 100
+        this.maxHealth = 100
 
         this.healthBar = {
             width: 450,
             height: 30
         }
+
+        this.imageRight = "imgs/BossRight.png"
+        this.imageLeft = "imgs/Boss.png"
+        this.currentDirection = 'right'
+
 
         this.createHealthBar()
         this.init()
@@ -35,7 +40,7 @@ class Enemy {
     init() {
         this.element = document.createElement('div')
         this.element = document.createElement('img')
-        this.element.src = "imgs/Boss.png"
+        this.element.src = this.imageRight
 
 
         this.element.style.position = "absolute"
@@ -50,9 +55,11 @@ class Enemy {
     }
 
     move() {
+        let oldDirection = this.currentDirection
 
         if (this.position.left >= this.gameSize.width - this.enemySize.width || this.position.left <= 0) {
             this.physics.speed.left *= -1
+            this.currentDirection = this.physics.speed.left > 0 ? 'right' : 'left'
         }
 
         if (this.position.top >= this.gameSize.height - this.enemySize.height || this.position.top <= 0) {
@@ -64,6 +71,10 @@ class Enemy {
 
         this.element.style.left = `${this.position.left}px`
         this.element.style.top = `${this.position.top}px`
+
+        if (oldDirection !== this.currentDirection) {
+            this.element.src = this.currentDirection === 'right' ? this.imageRight : this.imageLeft
+        }
     }
 
     getEnemyLimits() {
@@ -78,22 +89,32 @@ class Enemy {
     }
 
     createHealthBar() {
-        this.enemyHealthBarElement = document.createElement("div")
+        this.healthBarElement = document.createElement("div")
 
-        this.enemyHealthBarElement.style.position = "absolute"
-        this.enemyHealthBarElement.style.width = `${this.healthBar.width}px`
-        this.enemyHealthBarElement.style.height = `${this.healthBar.height}px`
-        this.enemyHealthBarElement.style.top = "40px"
-        this.enemyHealthBarElement.style.left = "1000px"
-        this.enemyHealthBarElement.style.backgroundColor = "gray"
+        this.healthBarElement.style.position = "absolute"
+        this.healthBarElement.style.width = `${this.healthBar.width}px`
+        this.healthBarElement.style.height = `${this.healthBar.height}px`
+        this.healthBarElement.style.top = "40px"
+        this.healthBarElement.style.left = "1000px"
+        this.healthBarElement.style.backgroundColor = "gray"
 
-        this.enemyBarFillElement = document.createElement("div")
-        this.enemyBarFillElement.style.width = "100%"
-        this.enemyBarFillElement.style.height = "100%"
-        this.enemyBarFillElement.style.backgroundColor = "red"
+        this.barFillElement = document.createElement("div")
+        this.barFillElement.style.width = "100%"
+        this.barFillElement.style.height = "100%"
+        this.barFillElement.style.backgroundColor = "red"
 
-        this.enemyHealthBarElement.appendChild(this.enemyBarFillElement)
-        document.querySelector('#game-screen').appendChild(this.enemyHealthBarElement)
+        this.healthBarElement.appendChild(this.barFillElement)
+        document.querySelector('#game-screen').appendChild(this.healthBarElement)
+    }
+
+    updateHealthBar() {
+        const currentHealth = (this.healthPoints / this.maxHealth) * 100
+        this.barFillElement.style.width = `${currentHealth}%`
+    }
+
+    receiveDamage(amount) {
+        this.healthPoints = Math.max(0, this.healthPoints - amount)
+        this.updateHealthBar()
     }
 
 

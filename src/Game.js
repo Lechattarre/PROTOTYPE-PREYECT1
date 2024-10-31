@@ -3,10 +3,9 @@ const Game = {
     author: 'john & ivan',
     version: '1.0',
     license: undefined,
+
     framesCounter: 0,
-    backgroundMusic: new Audio('sounds/soundtrack.mp3'),
-
-
+    backgroundMusic: new Audio('sounds/soundtrackshort.mp3'),
 
 
     gameSize: {
@@ -36,8 +35,8 @@ const Game = {
     },
 
     start() {
-        this.backgroundMusic.loop = true;
-        this.backgroundMusic.volume = 0.2;
+
+        this.backgroundMusic.volume = 0.3;
         this.backgroundMusic.play();
 
         this.createElements();
@@ -191,7 +190,7 @@ const Game = {
                 ) {
                     this.player.bullets.splice(bulletIdx, 1);
                     bullet.bulletElement.remove();
-                    this.enemy.healthPoints--;
+                    this.enemy.receiveDamage(1);
                 }
             }
 
@@ -205,15 +204,10 @@ const Game = {
                     bulletBounds.top < smallEnemyBounds.bottom &&
                     bulletBounds.bottom > smallEnemyBounds.top
                 ) {
-
-
-
                     smallEnemy.element.remove();
                     bullet.bulletElement.remove();
                     this.smallEnemies.splice(smallEnemyIdx, 1);
                     this.player.bullets.splice(bulletIdx, 1);
-
-
                 }
 
 
