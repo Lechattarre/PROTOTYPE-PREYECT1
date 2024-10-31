@@ -6,7 +6,8 @@ const Game = {
 
     framesCounter: 0,
     backgroundMusic: new Audio('sounds/soundtrackshort.mp3'),
-
+    deathSound: new Audio('sounds/gameOver.wav'),
+    winSound: new Audio('sounds/win.wav'),
 
     gameSize: {
         width: window.innerWidth,
@@ -36,7 +37,7 @@ const Game = {
 
     start() {
 
-        this.backgroundMusic.volume = 0.3;
+        this.backgroundMusic.volume = 0.1;
         this.backgroundMusic.play();
 
         this.createElements();
@@ -165,6 +166,7 @@ const Game = {
                 playerBounds.top < smallEnemiesBounds.bottom &&
                 playerBounds.bottom > smallEnemiesBounds.top
             ) {
+
                 this.player.receiveDamage(1)
                 console.log(this.player.healthPoints)
                 return true;
@@ -252,12 +254,17 @@ const Game = {
     },
 
     gameOver() {
-        alert("Perdiste por malo");
+        alert('perdiste')
+        return this.deathSound.play();
+
+
+
     },
 
     checkWin() {
         if (!this.enemy && this.smallEnemies.length === 0) {
-            return alert("GANASTE");
+            alert('you win')
+            return this.winSound.play();
         }
     }
 };

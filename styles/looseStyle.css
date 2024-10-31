@@ -1,0 +1,30 @@
+img {}
+
+body {
+    background-image: url(/imgs/Background.png);
+    background-size: cover;
+}
+
+.Hero {
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-size: 2.5em;
+    text-shadow: 5px 6px 7px black;
+    font-style: normal;
+    padding: 220px;
+    text-align: center;
+    color: white;
+
+
+}
+
+.hero-text {
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-size: 2.5em;
+    margin-top: 0px;
+    text-shadow: 5px 6px 7px black;
+    font-style: normal;
+    text-align: center;
+    color: white;
+}
