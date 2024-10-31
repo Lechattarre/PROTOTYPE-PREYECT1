@@ -47,6 +47,10 @@ class Player {
             height: 30
         }
 
+        this.imageRight = "imgs/Player.png"
+        this.imageLeft = "imgs/PlayerLeft.png"
+        this.currentDirection = "right"
+
         this.createHealthBar()
         this.init()
     }
@@ -55,7 +59,7 @@ class Player {
 
         this.playerElement = document.createElement('div')
         this.playerElement = document.createElement('img')
-        this.playerElement.src = "imgs/Player.png"
+        this.playerElement.src = this.imageRight
 
 
         this.playerElement.style.position = "absolute"
@@ -69,11 +73,14 @@ class Player {
     }
 
     move() {
+        let oldDirection = this.currentDirection
         if (this.moveFlags.left && this.playerPos.left > 0) {
             this.playerPos.left -= this.speed;
+            this.currentDirection = "left"
         }
         if (this.moveFlags.right && this.playerPos.left + this.playerSize.width < this.gameSize.width) {
             this.playerPos.left += this.speed;
+            this.currentDirection = "right"
         }
         if (this.moveFlags.up && this.playerPos.top > 0) {
             this.playerPos.top -= this.speed;
@@ -84,6 +91,10 @@ class Player {
 
         this.playerElement.style.left = `${this.playerPos.left}px`;
         this.playerElement.style.top = `${this.playerPos.top}px`;
+
+        if (oldDirection !== this.currentDirection) {
+            this.playerElement.src = this.currentDirection === 'right' ? this.imageRight : this.imageLeft;
+        }
 
         this.bullets.forEach(bullet => bullet.move());
         this.clearBullets();
