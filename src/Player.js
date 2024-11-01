@@ -208,7 +208,7 @@ class Player {
         this.flashCounterElement.style.left = "30px"
         this.flashCounterElement.style.fontSize = "24px"
         this.flashCounterElement.style.color = "yellow"
-        this.flashCounterElement.style.fontFamily = "Tiny5, sans-serif"
+        this.flashCounterElement.style.fontFamily = "'Tiny5', sans-serif"
 
         this.updateFlashCounter()
 
