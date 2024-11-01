@@ -33,14 +33,14 @@ class Player {
 
         this.speed = 9
 
-        this.healthPoints = 33
-        this.maxHealth = 33
+        this.healthPoints = 40
+        this.maxHealth = 40
 
         this.flashCount = 3
 
         this.flashSound = new Audio('sounds/flash.wav')
 
-        this.shootSound = new Audio('sounds/shoot.mp3')
+        this.shootSound = new Audio('sounds/laserGun.wav')
 
         this.healthBar = {
             width: 450,
@@ -204,7 +204,7 @@ class Player {
         this.flashCounterElement = document.createElement('div')
 
         this.flashCounterElement.style.position = "absolute"
-        this.flashCounterElement.style.top = "80px"
+        this.flashCounterElement.style.top = "90px"
         this.flashCounterElement.style.left = "30px"
         this.flashCounterElement.style.fontSize = "24px"
         this.flashCounterElement.style.color = "yellow"
